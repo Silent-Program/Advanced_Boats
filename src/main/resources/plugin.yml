@@ -1,0 +1,7 @@
+name: AdvancedBoats
+version: '${project.version}'
+main: me.silentprogram.advancedboats.AdvancedBoats
+api-version: 1.17
+prefix: Boats
+authors: [ SilentProgram ]
+description: More advanced boats
