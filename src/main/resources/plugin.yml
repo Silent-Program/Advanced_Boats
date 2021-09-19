@@ -5,3 +5,7 @@ api-version: 1.17
 prefix: Boats
 authors: [ SilentProgram ]
 description: More advanced boats
+depend: [ProtocolLib]
+
+commands:
+  test:
