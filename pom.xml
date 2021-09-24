@@ -39,7 +39,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                                <outputDirectory>C:\Users\think\Documents\Code\Server 1.17\plugins\update</outputDirectory>
+                            <outputDirectory>C:\Users\think\Documents\Code\Server 1.17\plugins\update</outputDirectory>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
@@ -63,10 +63,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-            <repository>
-                <id>dmulloy2-repo</id>
-                <url>https://repo.dmulloy2.net/repository/public/</url>
-            </repository>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/repository/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>

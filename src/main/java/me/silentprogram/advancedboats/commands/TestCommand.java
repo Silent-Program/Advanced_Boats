@@ -27,7 +27,8 @@ public class TestCommand implements CommandExecutor {
 		itemMeta.setCustomModelData(123456);
 		item.setItemMeta(itemMeta);
 		as.getEquipment().setHelmet(item);
-		plr.getInventory().addItem(item);
+		as.setCustomName("ADVANCEDVEHICLE_902191_" + plr.getName() + "_VEHICLETYPE");
+		as.setCustomNameVisible(false);
 		as.setVisible(false);
 		as.addPassenger(plr);
 		return true;

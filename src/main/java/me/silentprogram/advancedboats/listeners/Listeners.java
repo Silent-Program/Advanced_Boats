@@ -7,10 +7,13 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import me.silentprogram.advancedboats.AdvancedBoats;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -30,10 +33,16 @@ public class Listeners {
 			@Override
 			public void onPacketReceiving(PacketEvent event) {
 				Player plr = event.getPlayer();
-				if (plr.getVehicle() == null) return;
-				ArmorStand entity = (ArmorStand) plr.getVehicle();
+				Entity entity = plr.getVehicle();
+				if (entity == null || entity.getType() != EntityType.ARMOR_STAND) return;
+				if(!entity.getCustomName().split("_")[0].equals("ADVANCEDVEHICLE")) return;
+				ArmorStand stand = (ArmorStand) entity;
 				
-				entity.setRotation(plr.getLocation().getYaw(), plr.getLocation().getPitch());
+				Vector entityVelocity = stand.getVelocity();
+				Block block = plr.getLocation().getBlock();
+				
+				stand.setRotation(plr.getLocation().getYaw(), plr.getLocation().getPitch());
+				stand.setVelocity(entityVelocity.setY((block.getType() == Material.WATER || block.getType() == Material.KELP || block.getType() == Material.SEAGRASS|| block.getType() == Material.TALL_SEAGRASS|| block.getType() == Material.KELP_PLANT ? 0.01 : entityVelocity.getY())));
 			}
 		});
 		manager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.STEER_VEHICLE) {
@@ -41,16 +50,17 @@ public class Listeners {
 			public void onPacketReceiving(PacketEvent event) {
 				Player plr = event.getPlayer();
 				Entity entity = plr.getVehicle();
-				if (entity == null) return;
+				if (entity == null || entity.getType() != EntityType.ARMOR_STAND) return;
+				if(!entity.getCustomName().split("_")[0].equals("ADVANCEDVEHICLE")) return;
+				ArmorStand stand = (ArmorStand) entity;
+				
 				PacketContainer packet = event.getPacket();
 				float sidewaysFloat = packet.getFloat().read(0);
 				float forwardFloat = packet.getFloat().read(1);
-				boolean isJump = packet.getBooleans().read(0);
-				if(forwardFloat == 0 && sidewaysFloat == 0 && !isJump) return;
+				if (forwardFloat == 0 && sidewaysFloat == 0) return;
 				Vector vector = generateVector(plr, forwardFloat, sidewaysFloat);
-				double yVel = entity.getVelocity().getY();
 				//for boats check if the location below the player is water, if so set the Y to like 0.1 or smthng small
-				entity.setVelocity(vector.multiply(0.5).setY((isJump ? (entity.isOnGround() ? 0.4 : yVel) : yVel)));
+				stand.setVelocity(vector.multiply(0.5).setY(stand.getVelocity().getY()));
 			}
 		});
 	}
