@@ -25,11 +25,7 @@ public class EventManager {
 	}
 	
 	public void inputEvent(Player plr, PacketEvent event){
-		Entity entity = plr.getVehicle();
-		if (entity == null || entity.getType() != EntityType.ARMOR_STAND) return;
-		if (!entity.getCustomName().contains("ADVANCEDBOAT")) return;
-		String[] name = entity.getCustomName().split("_");
-		ArmorStand stand = (ArmorStand) entity;
+		ArmorStand stand = (ArmorStand) plr.getVehicle();
 		
 		PacketContainer packet = event.getPacket();
 		float sidewaysFloat = packet.getFloat().read(0);

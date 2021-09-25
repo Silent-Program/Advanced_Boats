@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import me.silentprogram.advancedboats.AdvancedBoats;
+import me.silentprogram.advancedboats.api.managers.BoatManager;
 import me.silentprogram.advancedboats.api.managers.EventManager;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -29,8 +30,9 @@ public class Listeners {
 			@Override
 			public void onPacketReceiving(PacketEvent event) {
 				Entity entity = event.getPlayer().getVehicle();
-				if (entity == null || entity.getType() != EntityType.ARMOR_STAND) return;
-				if (!entity.getCustomName().contains("ADVANCEDBOAT")) return;
+				BoatManager boatManager = new BoatManager((AdvancedBoats) plugin, entity);
+				
+				if (!boatManager.isBoat()) return;
 				eventManager.rotateEvent(event.getPlayer(), (ArmorStand) entity);
 			}
 		});
@@ -39,8 +41,9 @@ public class Listeners {
 			@Override
 			public void onPacketReceiving(PacketEvent event) {
 				Entity entity = event.getPlayer().getVehicle();
-				if (entity == null || entity.getType() != EntityType.ARMOR_STAND) return;
-				if (!entity.getCustomName().contains("ADVANCEDBOAT")) return;
+				BoatManager boatManager = new BoatManager((AdvancedBoats) plugin, entity);
+				
+				if (!boatManager.isBoat()) return;
 				eventManager.inputEvent(event.getPlayer(), event);
 			}
 		});

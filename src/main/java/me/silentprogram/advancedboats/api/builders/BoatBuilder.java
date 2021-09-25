@@ -29,24 +29,4 @@ public class BoatBuilder {
 		boat.setVisible(false);
 		return boat;
 	}
-	//Getters, and setters
-	public void setBoatType(BoatType boatType) {
-		this.boatType = boatType;
-	}
-	
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
-	}
-	
-	public BoatType getBoatType() {
-		return boatType;
-	}
-	
-	public UUID getUuid() {
-		return uuid;
-	}
-	
-	public Player getPlayer() {
-		return plr;
-	}
 }
